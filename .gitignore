@@ -1,14 +1,45 @@
-# Python
-backend/.env
-backend/__pycache__/
-backend/*.pyc
-backend/venv/
+# ── Python ────────────────────────────────────────────────────────
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+build/
 
-# Node
-frontend/.env
+# Virtual environment
+backend/venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# ── Node ─────────────────────────────────────────────────────────
 frontend/node_modules/
 frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
 
-# OS
+# ── Testing ───────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── OS ────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+
+# ── Editor ────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.swp
+
+# ── Logs ──────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Design ────────────────────────────────────────────────────────
+Design/
