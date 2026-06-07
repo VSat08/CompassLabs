@@ -5,14 +5,53 @@ import {
   Mail,
   Search,
   ShieldCheck,
+  Eye,
+  EyeOff,
 } from "lucide-react";
-import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 function SignIn() {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const signIn = useAuthStore((state) => state.signIn);
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const error = useAuthStore((state) => state.error);
+  const clearError = useAuthStore((state) => state.clearError);
+
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+    useEffect(() => {
+      if (isAuthenticated) {
+        navigate("/workspace", { replace: true });
+      }
+    }, [isAuthenticated, navigate]);
+  
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const success = await signIn({
+      email: email.trim(),
+      password,
+    });
+
+    if (success) {
+      navigate("/workspace", { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    clearError();
+  }, [clearError]);
+
   return (
     <main className="min-h-screen bg-(--cl-color-bg) px-6 py-8">
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
@@ -90,7 +129,7 @@ function SignIn() {
             </p>
           </div>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <label className="block">
               <span className="text-sm font-medium text-(--cl-color-text)">
                 Email
@@ -100,8 +139,12 @@ function SignIn() {
                 <Mail size={18} className="text-(--cl-color-text-soft)" />
                 <input
                   type="email"
+                  required
                   value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    clearError();
+                  }}
                   placeholder="you@example.com"
                   className="w-full bg-transparent text-sm text-(--cl-color-text) outline-none placeholder:text-(--cl-color-text-soft)"
                 />
@@ -116,20 +159,40 @@ function SignIn() {
               <div className="mt-2 flex items-center gap-3 rounded-(--cl-radius-md) border border-(--cl-color-border) bg-(--cl-color-surface) px-4 py-3 focus-within:border-(--cl-color-primary)">
                 <Lock size={18} className="text-(--cl-color-text-soft)" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  minLength={8}
                   value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    clearError();
+                  }}
                   placeholder="Enter your password"
                   className="w-full bg-transparent text-sm text-(--cl-color-text) outline-none placeholder:text-(--cl-color-text-soft)"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((value) => !value)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="text-(--cl-color-text-soft) transition hover:text-(--cl-color-text)"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </label>
 
+            {error ? (
+              <p className="rounded-(--cl-radius-md) bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                {error}
+              </p>
+            ) : null}
+
             <button
-              type="button"
-              className="flex w-full items-center justify-center gap-2 rounded-(--cl-radius-md) bg-(--cl-color-primary) px-5 py-3 text-sm font-semibold text-white shadow-(--cl-shadow-sm) transition hover:bg-(--cl-color-primary-hover)"
+              type="submit"
+              disabled={isLoading}
+              className="flex w-full items-center justify-center gap-2 rounded-(--cl-radius-md) bg-(--cl-color-primary) px-5 py-3 text-sm font-semibold text-white shadow-(--cl-shadow-sm) transition hover:bg-(--cl-color-primary-hover) disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Sign in
+              {isLoading ? "Signing in..." : "Sign in"}
               <ArrowRight size={18} />
             </button>
           </form>
@@ -137,6 +200,7 @@ function SignIn() {
             New to CompassLabs?{" "}
             <Link
               to="/sign-up"
+              onClick={clearError}
               className="font-semibold text-(--cl-color-primary) transition hover:text-(--cl-color-primary-hover)"
             >
               Create an account
