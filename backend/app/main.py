@@ -3,11 +3,27 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from app.core.config import settings
 from app.routers.auth import router as auth_router
+from app.routers.companies import router as companies_router
+
+from contextlib import asynccontextmanager
+from app.core.http_client import init_http_client, close_http_client
+from app.core.redis import init_redis_client, close_redis_client
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize global connection pools
+    await init_http_client()
+    await init_redis_client()
+    yield
+    # Shutdown: Close global connection pools cleanly
+    await close_http_client()
+    await close_redis_client()
 
 app = FastAPI(
     title="CompassLabs Backend",
     description="AI powered platform for company research and analysis",
     version="1.0.0",
+    lifespan=lifespan,
     swagger_ui_parameters={
         "persistAuthorization": True,
         "tryItOutEnabled": True,
@@ -23,6 +39,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(companies_router)
 
 
 @app.get("/")

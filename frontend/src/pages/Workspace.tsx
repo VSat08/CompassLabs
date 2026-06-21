@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import SearchBar from "../components/SearchBar";
 
 function Workspace() {
   const navigate = useNavigate();
@@ -36,6 +37,10 @@ function Workspace() {
           >
             Sign out
           </button>
+        </div>
+
+        <div className="mt-12">
+          <SearchBar />
         </div>
       </section>
     </main>

@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Workspace from "./pages/Workspace";
+import CompanyProfile from "./pages/CompanyProfile";
 
 function App() {
 
@@ -26,6 +27,14 @@ function App() {
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route 
+          path="/company/:ticker" 
+          element={
+            <ProtectedRoute>
+              <CompanyProfile />
+            </ProtectedRoute>
+          } 
+        />
 
         <Route
           path="/workspace"
