@@ -15,7 +15,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 function SignIn() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,14 +25,13 @@ function SignIn() {
   const error = useAuthStore((state) => state.error);
   const clearError = useAuthStore((state) => state.clearError);
 
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-    useEffect(() => {
-      if (isAuthenticated) {
-        navigate("/workspace", { replace: true });
-      }
-    }, [isAuthenticated, navigate]);
-  
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/workspace", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,7 +53,7 @@ function SignIn() {
   return (
     <main className="min-h-screen bg-(--cl-color-bg) px-6 py-8">
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="hidden lg:block">
+        <Link to="/home" className="hidden lg:block">
           <p className="text-sm font-semibold uppercase tracking-wide text-(--cl-color-primary)">
             CompassLabs
           </p>
@@ -112,7 +110,7 @@ function SignIn() {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
         <div className="mx-auto w-full max-w-md rounded-(--cl-radius-lg) border border-(--cl-color-border) bg-(--cl-color-surface) p-8 shadow-(--cl-shadow-md)">
           <div className="mb-8">

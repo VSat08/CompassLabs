@@ -10,36 +10,69 @@
         "Segoe UI",
         sans-serif;
 
-    color-scheme: light;
+    /* Default to Dark Theme */
+    color-scheme: dark;
 
-    --cl-color-bg: #f8fafc;
-    --cl-color-surface: #ffffff;
-    --cl-color-surface-soft: #f1f5f9;
+    --cl-color-bg: #030305;
+    --cl-color-surface: #0b0d10;
+    --cl-color-surface-soft: #0f1113;
 
-    --cl-color-text: #0f172a;
-    --cl-color-text-muted: #475569;
-    --cl-color-text-soft: #64748b;
+    --cl-color-text: #eef2f7;
+    --cl-color-text-muted: #9aa7b2;
+    --cl-color-text-soft: #7f8a93;
 
-    --cl-color-border: #e2e8f0;
-    --cl-color-border-strong: #cbd5e1;
+    --cl-color-border: rgba(255, 255, 255, 0.06);
+    --cl-color-border-strong: rgba(255, 255, 255, 0.09);
 
-    --cl-color-primary: #2563eb;
-    --cl-color-primary-hover: #1d4ed8;
-    --cl-color-primary-soft: #dbeafe;
+    --cl-color-primary: #10B981;
+    --cl-color-primary-hover: #0ea46b;
+    --cl-color-primary-soft: rgba(16, 185, 129, 0.08);
 
-    --cl-color-accent: #14b8a6;
-    --cl-color-accent-soft: #ccfbf1;
+    --cl-color-accent: #06b6d4;
+    --cl-color-accent-soft: rgba(6, 182, 212, 0.06);
 
-    --cl-color-success: #16a34a;
+    --cl-color-success: #22c55e;
     --cl-color-warning: #f59e0b;
-    --cl-color-error: #dc2626;
+    --cl-color-error: #fb7185;
 
-    --cl-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
-    --cl-shadow-md: 0 12px 32px rgb(15 23 42 / 0.08);
+    --cl-shadow-sm: 0 8px 20px rgba(2, 6, 23, 0.75);
+    --cl-shadow-md: 0 24px 60px rgba(2, 6, 23, 0.85);
 
     --cl-radius-sm: 8px;
     --cl-radius-md: 12px;
     --cl-radius-lg: 16px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: light;
+
+        --cl-color-bg: #f8fafc;
+        --cl-color-surface: #ffffff;
+        --cl-color-surface-soft: #f1f5f9;
+
+        --cl-color-text: #0f172a;
+        --cl-color-text-muted: #475569;
+        --cl-color-text-soft: #64748b;
+
+        --cl-color-border: #e2e8f0;
+        --cl-color-border-strong: #cbd5e1;
+
+        /* Keep the same primary and accent colors as the dark theme for consistency */
+        --cl-color-primary: #10B981;
+        --cl-color-primary-hover: #0ea46b;
+        --cl-color-primary-soft: rgba(16, 185, 129, 0.12);
+
+        --cl-color-accent: #06b6d4;
+        --cl-color-accent-soft: rgba(6, 182, 212, 0.12);
+
+        --cl-color-success: #16a34a;
+        --cl-color-warning: #f59e0b;
+        --cl-color-error: #dc2626;
+
+        --cl-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+        --cl-shadow-md: 0 12px 32px rgb(15 23 42 / 0.08);
+    }
 }
 
 * {

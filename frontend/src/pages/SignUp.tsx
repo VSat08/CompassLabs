@@ -29,21 +29,19 @@ function SignUp() {
     }
   }, [isAuthenticated, navigate]);
 
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-const success = await signUp({
-  name: name.trim(),
-  email: email.trim(),
-  password,
-});    
+    const success = await signUp({
+      name: name.trim(),
+      email: email.trim(),
+      password,
+    });
 
     if (success) {
       navigate("/workspace", { replace: true });
